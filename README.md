@@ -1,3 +1,3 @@
 # Challenges of designing sRNA networks
 
-![Differences](notebooks/data/figs/synchix_diffs.jpg)
+![Differences in synthetic ChiX binding after mutation](sRNA_design/notebooks/data/figs/synchix_diffs.jpg)
