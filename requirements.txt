@@ -3,18 +3,18 @@ biopython
 autopep8
 # -e git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@47391ff32aa2e0e9dcbb4541efb526ff6c43e427#egg=bioreaction
 boto3
-# chex==0.1.81
+chex==0.1.85
 # git+https://github.com/deepmind/chex.git
 diffrax==0.3.1
 dm-haiku==0.0.10
 # dm-tree==0.1.7
-equinox==0.10.4
+equinox==0.11.3
 graphviz==0.20.1
 imblearn
 ipykernel==6.17.1
-# jax==0.4.16
+# jax==0.4.24
 # -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html 
-# jaxlib==0.4.16+cuda11.cudnn86 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html 
+# jaxlib==0.4.24+cuda11.cudnn86 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html 
 jupyter==1.0.0
 matplotlib
 notebook==6.5.2
