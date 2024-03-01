@@ -9,6 +9,7 @@
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
 notebooks/weight_saves
 notebooks/data/*
+notebooks/ViennaRNA*
 !notebooks/data/figs/
 notebooks/RNAplfold_scripts
 src/nucleotide_transformer
