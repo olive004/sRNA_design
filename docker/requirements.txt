@@ -3,37 +3,37 @@ biopython
 autopep8
 # -e git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@47391ff32aa2e0e9dcbb4541efb526ff6c43e427#egg=bioreaction
 boto3
-chex==0.1.85
+chex
 # git+https://github.com/deepmind/chex.git
-diffrax==0.3.1
-dm-haiku==0.0.10
-# dm-tree==0.1.7
-equinox==0.11.3
-graphviz==0.20.1
+diffrax
+dm-haiku
+# dm-tree
+equinox
+graphviz
 imblearn
-ipykernel==6.17.1
-# jax==0.4.24
+ipykernel
+# jax
 # -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html 
-# jaxlib==0.4.24+cuda11.cudnn86 -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html 
-jupyter==1.0.0
+# jaxlib
+jupyter
 matplotlib
-notebook==6.5.2
-numpy==1.24.3
-# nvidia-cudnn-cu11==8.9.2.26
-optax==0.1.4
-pandas==1.5.2
-pyvis==0.3.1
+notebook
+numpy
+# nvidia-cudnn-cu11
+optax
+pandas
+pyvis
 regex
-scikit-learn==1.2.2
-scipy==1.10.1
-seaborn==0.12.1
+scikit-learn
+scipy
+seaborn
 # -e git+https://github.com/olive004/synbio_morpher.git@a6ab067bd0b09e4cac4bb1ccca4624a6f521c024#egg=synbio_morpher
 # -i https://test.pypi.org/simple/ synbio-morpher
-tensorflow==2.13.1
+tensorflow
 torch
-tqdm==4.65.0
-typing_extensions==4.5.0
-umap-learn==0.5.3
-varnaapi==1.1.1
-viennarna==2.6.4
-wandb==0.14.2
+tqdm
+typing_extensions
+umap-learn
+varnaapi
+viennarna
+wandb
