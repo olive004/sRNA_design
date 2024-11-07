@@ -25,7 +25,7 @@ ls -la /usr/bin/python3
 
 python3.11 -m pip install -U setuptools
 export SETUPTOOLS_USE_DISTUTILS=stdlib
-python3.11 -m pip install git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@599990dcac56e7678f45269d2fc9df736d25f356#egg=bioreaction
+# python3.11 -m pip install git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@599990dcac56e7678f45269d2fc9df736d25f356#egg=bioreaction
 python3.11 -m pip install git+https://github.com/olive004/synbio_morpher.git@bc7aaf284fcf5b10abf591f5f2cf6c898f45861f#egg=synbio_morpher
-# pip install -e src/bioreaction
+python3.11 -m pip install -e src/bioreaction
 python3.11 -m pip install -r ./requirements.txt
