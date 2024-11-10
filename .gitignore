@@ -12,6 +12,7 @@ notebooks/data/*
 notebooks/ViennaRNA*
 notebooks/ViennaRNA
 !notebooks/data/figs/
+!notebooks/data/18_orthogonality_extra_database
 notebooks/RNAplfold_scripts
 src/nucleotide_transformer
 notebooks/nupack*
