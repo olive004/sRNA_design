@@ -19,6 +19,7 @@ matplotlib
 notebook
 numpy
 nvidia-cudnn-cu12
+openpyxl
 optax
 pandas
 pyvis

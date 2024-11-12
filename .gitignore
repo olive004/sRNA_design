@@ -7,6 +7,7 @@
 *wandb
 # data/sRNA/merged_inter.csv
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
+data/sRNA/TableS2_E_coli_with_seq.csv
 notebooks/weight_saves
 notebooks/data/*
 notebooks/ViennaRNA*

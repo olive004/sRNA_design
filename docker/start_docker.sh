@@ -1,8 +1,8 @@
 
 # A pre-req for using gpus here is the NVIDIA Docker Container Toolkit
 
-sudo docker pull quay.io/biocontainers/intarna:3.3.2--pl5321h7ff8a90_0
-# sudo docker run --rm -it --entrypoint bash quay.io/biocontainers/intarna:3.3.2--pl5321h7ff8a90_0
+sudo docker pull quay.io/biocontainers/intarna:3.4.1--pl5321hdcf5f25_0
+# sudo docker run --rm -it --entrypoint bash quay.io/biocontainers/intarna:3.4.1--pl5321hdcf5f25_0
 sudo docker pull nvidia/cuda:12.6.0-cudnn-devel-ubuntu22.04
 
 # If image not built yet
