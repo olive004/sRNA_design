@@ -8,6 +8,7 @@
 # data/sRNA/merged_inter.csv
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
 data/sRNA/TableS2_E_coli_with_seq.csv
+data/sRNA/TableS2_E_coli_with_seq*
 notebooks/weight_saves
 notebooks/data/*
 notebooks/ViennaRNA*
