@@ -1,3 +1,4 @@
+data/sRNA/TableS2_E_coli_with_seq.csv
 *__pycache__
 *.gz
 *.pyc
@@ -5,10 +6,12 @@
 *data/processed
 *-ubyte
 *wandb
+data/sRNA/TableS2_E_coli_with_seq.csv
 # data/sRNA/merged_inter.csv
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
 data/sRNA/TableS2_E_coli_with_seq.csv
 data/sRNA/TableS2_E_coli_with_seq*
+*sRNA/TableS2_E_coli_with_seq.csv
 notebooks/weight_saves
 notebooks/data/*
 notebooks/ViennaRNA*
@@ -19,3 +22,4 @@ notebooks/data/18_orthogonality_extra_database/inter_data_genome.json
 notebooks/RNAplfold_scripts
 src/nucleotide_transformer
 notebooks/nupack*
+data/sRNA/TableS2_E_coli_with_seq.csv
