@@ -13,6 +13,8 @@ notebooks/ViennaRNA*
 notebooks/ViennaRNA
 !notebooks/data/figs/
 !notebooks/data/18_orthogonality_extra_database
+notebooks/data/18_orthogonality_extra_database/fps_extras_spot
+notebooks/data/18_orthogonality_extra_database/fps_spot
 notebooks/data/18_orthogonality_extra_database/inter_data_genome.json
 notebooks/data/18_orthogonality_extra_database/inter_data_mrnas.json
 notebooks/RNAplfold_scripts
