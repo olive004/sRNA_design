@@ -37,3 +37,14 @@ umap-learn
 varnaapi
 viennarna
 wandb
+
+# Dependencies for https://github.com/hsalis/SalisLabCode/tree/master/mRNA_Stability_Calculator
+sklearn
+lightgbm
+biopython
+dm-sonnet
+jupyterlab
+sonnet
+graphs
+mpi4py
+zipfile
