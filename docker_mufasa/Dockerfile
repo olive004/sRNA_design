@@ -43,6 +43,7 @@ RUN git clone https://github.com/biointec/blamm.git && \
     make && \
     make install
 
+RUN apt-get install libgsl-dev
 RUN wget https://www.tbi.univie.ac.at/RNA/download/sourcecode/2_5_x/ViennaRNA-2.5.0.tar.gz && \
     tar xvfz ViennaRNA-2.5.0.tar.gz && \
     cd ViennaRNA-2.5.0 && \

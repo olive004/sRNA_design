@@ -47,4 +47,4 @@ jupyterlab
 sonnet
 graphs
 mpi4py
-zipfile
+zip-files
