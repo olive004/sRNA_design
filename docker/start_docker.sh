@@ -17,5 +17,6 @@ sudo docker create -it \
 --mount type=bind,source="$(pwd)",target=/workdir \
 genetic_glitch:latest
 sudo docker container start srna
+sudo docker exec -it srna bash docker/post_install.sh
 sudo docker exec -it srna /bin/bash 
 # sudo docker container stop srna

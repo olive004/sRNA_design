@@ -1,4 +1,3 @@
-absl-py
 biopython
 autopep8
 # -e git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@599990dcac56e7678f45269d2fc9df736d25f356#egg=bioreaction
@@ -9,6 +8,7 @@ diffrax
 dm-haiku
 # dm-tree
 equinox
+fastcluster
 graphviz
 imblearn
 ipykernel
@@ -19,7 +19,8 @@ jupyter
 matplotlib
 notebook
 numpy
-# nvidia-cudnn-cu11
+nvidia-cudnn-cu12
+openpyxl
 optax
 pandas
 pyvis
@@ -29,7 +30,6 @@ scipy
 seaborn
 # -e git+https://github.com/olive004/synbio_morpher.git@147c6a18a8c08b25d49042ec1adb9ec49ebadd75#egg=synbio_morpher
 # -i https://test.pypi.org/simple/ synbio-morpher
-tensorflow
 torch
 tqdm
 typing_extensions
@@ -37,3 +37,14 @@ umap-learn
 varnaapi
 viennarna
 wandb
+
+# Dependencies for https://github.com/hsalis/SalisLabCode/tree/master/mRNA_Stability_Calculator
+sklearn
+lightgbm
+biopython
+dm-sonnet
+jupyterlab
+sonnet
+graphs
+mpi4py
+zip-files

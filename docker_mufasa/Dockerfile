@@ -25,33 +25,6 @@ RUN pip install git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulat
 RUN export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64:/
 
 ################################################################################
-#  Dependencies for https://github.com/hsalis/SalisLabCode/blob/master/mRNA_Stability_Calculator/Dockerfile
-################################################################################
-
-RUN apt-get update && apt-get install -y python3 python3-pip build-essential zip wget pypy graphviz nano \
-                                         apt-transport-https ca-certificates curl software-properties-common \
-                                         intel-mkl git-core cmake \
-                                         pandoc memcached \
-                                         gcc gfortran g++ openmpi-bin openmpi-common libopenmpi-dev libopenblas-base liblapack3 liblapack-dev make 
-                                        #  && rm -rf /var/lib/apt/lists/*
-
-RUN git clone https://github.com/biointec/blamm.git && \
-    cd blamm && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make && \
-    make install
-
-RUN apt-get install libgsl-dev
-RUN wget https://www.tbi.univie.ac.at/RNA/download/sourcecode/2_5_x/ViennaRNA-2.5.0.tar.gz && \
-    tar xvfz ViennaRNA-2.5.0.tar.gz && \
-    cd ViennaRNA-2.5.0 && \
-    ./configure && \
-    make && \
-    make install
-
-################################################################################
 #  setup environment
 ################################################################################
 ENV ROOT_DIR=/workdir
