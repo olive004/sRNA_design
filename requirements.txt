@@ -39,7 +39,7 @@ viennarna
 wandb
 
 # Dependencies for https://github.com/hsalis/SalisLabCode/tree/master/mRNA_Stability_Calculator
-sklearn
+scikit-learn
 lightgbm
 biopython
 dm-sonnet
