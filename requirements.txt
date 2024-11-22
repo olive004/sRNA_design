@@ -8,7 +8,6 @@ diffrax
 dm-haiku
 # dm-tree
 equinox
-fastcluster
 graphviz
 imblearn
 ipykernel
