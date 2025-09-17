@@ -1,0 +1,14 @@
+[{
+  "name": "Hfq Hexamer",
+  "modelSeeds": ["1"],
+  "sequences": [
+    {
+      "proteinChain": {
+        "sequence": "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE",
+        "count": 6
+      }
+    }
+  ],
+  "dialect": "alphafoldserver",
+  "version": 1
+}]
