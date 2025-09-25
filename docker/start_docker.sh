@@ -14,6 +14,7 @@ sudo docker create -it \
 --rm \
 --gpus all \
 --name srna \
+--runtime nvidia \
 --mount type=bind,source="$(pwd)",target=/workdir \
 genetic_glitch:latest
 sudo docker container start srna
