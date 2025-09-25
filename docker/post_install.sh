@@ -29,7 +29,7 @@ fi
 python3 -m pip install -U chex
 # pip install git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@f903c39872de43e28b56653efda689bb082cb592#egg=bioreaction
 
-python3 -m pip install install boltz[cuda] -U
+python3 -m pip install boltz[cuda] -U
 python3 -m pip install -U setuptools
 export SETUPTOOLS_USE_DISTUTILS=stdlib
 python3 -m pip install git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@f903c39872de43e28b56653efda689bb082cb592#egg=bioreaction
