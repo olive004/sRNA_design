@@ -8,6 +8,7 @@
 # data/sRNA/merged_inter.csv
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
 notebooks/blamm
+notebooks/boltz/results
 notebooks/data/*
 notebooks/ViennaRNA*
 notebooks/ViennaRNA
