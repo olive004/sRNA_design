@@ -1,0 +1,92 @@
+version: 1
+
+# --- Molecules ---------------------------------------------------------------
+sequences:
+  - protein: { id: HfqA, sequence: "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE" }
+  - protein: { id: HfqB, sequence: "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE" }
+  - protein: { id: HfqC, sequence: "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE" }
+  - protein: { id: HfqD, sequence: "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE" }
+  - protein: { id: HfqE, sequence: "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE" }
+  - protein: { id: HfqF, sequence: "MAKGQSLQDPFLNALRRERVPVSIYLVNGIKLQGQIESFDQFVILLKNTVSQMVYKHAISTVVPSRPVSHHSNNAGGGTSSNYHHGSSAQNTSAQQDSEETE" }
+  - rna:
+      id: GFPmu
+      sequence: "AUGAGCAAAGGCGAAGAACUGUUUACCGGCGUGGUGCCGAUUCUGGUGGAACUGGAUGGCGAUGUGAACGGCCAUAAAUUUAGCGUGAGCGGCGAAGGCGAAGGCGAUGCGACCUAUGGCAAACUGACCCUGAAAUUUAUUUGCACCACCGGCAAACUGCCGGUGCCGUGGCCGACCCUGGUGACCACCUUUAGCUAUGGCGUGCAGUGCUUUAGCCGCUAUCCGGAUCAUAUGAAACAGCAUGAUUUUUUUAAAAGCGCGAUGCCGGAAGGCUAUGUGCAGGAACGCACCAUUUUUUUUAAAGAUGAUGGCAACUAUAAAACCCGCGCGGAAGUGAAAUUUGAAGGCGAUACCCUGGUGAACCGCAUUGAACUGAAAGGCAUUGAUUUUAAAGAAGAUGGCAACAUUCUGGGCCAUAAACUGGAAUAUAACUAUAACAGCCAUAACGUGUAUAUUAUGGCGGAUAAACAGAAAAACGGCAUUAAAGUGAACUUUAAAAUUCGCCAUAACAUUGAAGAUGGCAGCGUGCAGCUGGCGGAUCAUUAUCAGCAGAACACCCCGAUUGGCGAUGGCCCGGUGCUGCUGCCGGAUAACCAUUAUCUGAGCACCCAGAGCGCGCUGAGCAAAGAUCCGAACGAAAAACGCGAUCAUAUGGUGCUGCUGGAAUUUGUGACCGCGGCGGGCAUUACCCAUGGCAUGGAUGAACUGUAUAAA"
+
+# --- Template: fix the protein multimer; leave RNA untemplated ----------------
+templates:
+  - cif: results/boltz_results_bzjob_2_hfq_hex/predictions/bzjob_2_hfq_hex/bzjob_2_hfq_hex_model_0.cif
+    # Chains listed here are *locked* to the template geometry.
+    chain_id: [HfqA, HfqB, HfqC, HfqD, HfqE, HfqF]
+    force: true              # strict enforcement (aka Boltz steering)
+    threshold: 1000.0        # huge cutoff to keep full-chain mapping
+    steering:
+      enabled: true
+      mode: "backbone_and_torsions"   # keep protein fixed at backbone & chi
+      rmsd_tolerance: 0.5             # Å; tiny wiggle room
+      weight: 1.0
+
+# --- Freeze the protein; allow only RNA to move -------------------------------
+# (Some builds use 'freeze' and some 'constraints.freeze'; both shown for safety.)
+freeze:
+  - chains: [HfqA, HfqB, HfqC, HfqD, HfqE, HfqF]
+    rigid_body: true
+    backbone:   true
+    sidechain:  true
+
+sampling:
+  seeds: 8
+  movable_chains: [GFPmu]       # only sample RNA
+  moves:
+    - chain_id: GFPmu
+      rigid_body: { enabled: true, max_translation: 20.0, max_rotation_deg: 180 }
+      torsions:   { enabled: true }   # let RNA flex
+  initial_placement:
+    - chain_id: GFPmu
+      strategy: "random_shell"        # start around the receptor
+      shell_radius: 30.0              # Å; adjust if you know the pocket
+
+# --- Optional guidance to narrow the RNA search space -------------------------
+# Provide *at most* soft hints; delete if you want totally unguided sampling.
+restraints:
+  # Keep protein-protein contacts intact (extra rigidity; redundant with freeze but cheap insurance)
+  maintain_contacts:
+    - chains: [HfqA, HfqB, HfqC, HfqD, HfqE, HfqF]
+      type: "intra"
+      weight: 0.5
+      cutoff: 8.0    # Å heavy-atom contact preservation
+
+  # If you know a binding face/pocket on Hfq, uncomment one of the pockets below.
+  pockets:
+    - name: "proximal_face"
+      applies_to: GFPmu
+      sphere: { center_res: { chain: HfqA, resi: 45, atom: CA }, radius: 20.0 }
+      weight: 0.3
+    - name: "distal_face"
+      applies_to: GFPmu
+      sphere: { center_res: { chain: HfqC, resi: 55, atom: CA }, radius: 20.0 }
+      weight: 0.3
+
+  # If you have prior residue↔nucleotide contacts, list a few (soft) ambiguous restraints:
+  contacts:
+    - pairs:
+        - { protein: { chain: HfqA, resi: 56 }, rna: { chain: GFPmu, idx: 9 } }
+        - { protein: { chain: HfqB, resi: 31 }, rna: { chain: GFPmu, idx: 72 } }
+      type: "ambiguous"
+      distance: { min: 2.5, max: 6.5 }
+      weight: 0.5
+
+# --- Scoring / outputs --------------------------------------------------------
+scoring:
+  report: [plddt, pae, pde, iptm, ptm, clashes]
+  clash_threshold: 0.6     # reject severe steric clashes early
+  rank_by: ["pde:asc", "pae:asc", "clashes:asc"]
+
+outputs:
+  n_models: 10
+  save:
+    formats: [cif, pdb]
+    pae: true
+    pde: true
+    plddt: true
+  relax:
+    enabled: false          # keep receptor fixed; (enable only if you relax RNA-only)
