@@ -34,7 +34,7 @@ freeze:
     sidechain:  true
 
 sampling:
-  seeds: 8
+  seeds: 50
   movable_chains: [GFPmu]       # only sample RNA
   moves:
     - chain_id: GFPmu
