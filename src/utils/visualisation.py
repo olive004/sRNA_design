@@ -25,10 +25,10 @@ def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate', an
         pass
 
 
-def draw_rna_plddt_varna(
+def draw_rna_nucolor_varna(
     dot_bracket: str,
     sequence: str,
-    plddt: np.ndarray,
+    nuc_color: np.ndarray,
     *,
     out_file: Optional[str] = None,
     caption: str = "pLDDT (higher = better)",
@@ -38,13 +38,13 @@ def draw_rna_plddt_varna(
     palette: str = 'viridis'
 ) -> Structure:
     """
-    Visualise RNA secondary structure with VARNA (via varnaapi) and color nucleotides by pLDDT using 'viridis'.
+    Visualise RNA secondary structure with VARNA (via varnaapi) and color nucleotides by nuc_color using 'viridis'.
 
     Args
     ----
     dot_bracket: RNA structure in dot-bracket notation.
     sequence:    RNA sequence (same length as dot_bracket).
-    plddt:       Iterable of pLDDT values (0..100 or 0..1); len must equal sequence length.
+    plddt:       Iterable of nuc_color values (0..100 or 0..1); len must equal sequence length.
     out_file:    If given, save to this path (.png or .svg). Otherwise display with v.show().
     caption:     Title for the colorbar/legend.
     algorithm:   VARNA drawing algorithm ('naview', 'radiate', 'circular', 'line').
@@ -58,18 +58,18 @@ def draw_rna_plddt_varna(
     if len(dot_bracket) != n:
         raise ValueError(
             f"sequence and dot_bracket must match in length (got {n} vs {len(dot_bracket)})")
-    plddt = np.asarray(plddt, dtype=float)
-    if plddt.shape[0] != n:
+    nuc_color = np.asarray(nuc_color, dtype=float)
+    if nuc_color.shape[0] != n:
         raise ValueError(
-            f"plDDT length must equal sequence length (expected {n}, got {plddt.shape[0]})")
+            f"plDDT length must equal sequence length (expected {n}, got {nuc_color.shape[0]})")
 
     # Accept both 0..100 and 0..1, normalise to 0..1 for colormap construction, but keep raw range for VARNA scaling
-    raw_min, raw_max = float(plddt.min()), float(plddt.max())
+    raw_min, raw_max = float(nuc_color.min()), float(nuc_color.max())
     # If values look like 0..100, scale to 0..1 for colormap keys but retain vMin/vMax as raw (so legend is 0..100)
-    looks_0_100 = raw_max > 1.5
+    looks_0_100 = False #raw_max > 1.5
     # norm_vals = (plddt / 100.0) if looks_0_100 else plddt.copy()
 
-    norm_vals = np.interp(plddt, (plddt.min(), plddt.max()), (0.0, 1.0))
+    norm_vals = np.interp(nuc_color, (nuc_color.min(), nuc_color.max()), (0.0, 1.0))
 
     # --- build a custom viridis style mapping for VARNA
     # VARNA API allows a custom color map via a dict {value: color}; we provide a dense 256-step mapping.
@@ -79,7 +79,7 @@ def draw_rna_plddt_varna(
         keys = np.linspace(0.0, 100.0, 256)
         samples = keys / 100.0
         vMin, vMax = 0.0, 100.0
-        value_list_for_varna = plddt.tolist()
+        value_list_for_varna = nuc_color.tolist()
     else:
         # keys in 0..1
         keys = np.linspace(0.0, 1.0, 256)
@@ -111,5 +111,5 @@ def draw_rna_plddt_varna(
     if out_file:
         v.savefig(out_file)   # .png or .svg
     # else:
-    v.show()
+    # v.show()
     return v
