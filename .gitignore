@@ -12,6 +12,7 @@ notebooks/boltz/results
 notebooks/boltz/rnp_run
 notebooks/data/*
 notebooks/rosetta/rnp_run
+notebooks/rosetta/ROSETTA_CRASH.log
 notebooks/ViennaRNA*
 notebooks/ViennaRNA
 notebooks/weight_saves
