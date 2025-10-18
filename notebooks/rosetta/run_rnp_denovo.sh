@@ -222,63 +222,85 @@ structure.write_pdb(output_pdb_path)
 print(f"Adjusted PDB saved to: {output_pdb_path}")
 PY
 
-# # --- Flags for fold-and-dock (protein rigid, RNA moves) ----------------------
-# cat > "$OUTDIR/inputs/flags_fold_and_dock" <<FLAGS
-# # Required inputs
-# -fasta $OUTDIR/inputs/fasta.txt
-# -secstruct_file $OUTDIR/inputs/secstruct.txt
-# # -s $PROT_PDB $OUTDIR/inputs/RNA_helix_3nt.pdb
-# -s $PROT_PDB $RNA_HELIXPDB
+echo "[*] Checking RNA helix (pdb) starts after protein residue indices (first index)..."
+python3 - <<PY
+def adjust_rna_pdb_indices(rna_pdb_path: str, prot_len: int, output_path: str = "RNA_adjusted.pdb"):
+    adjusted_lines = []
+    for line in open(rna_pdb_path):
+        if line.startswith(("ATOM", "HETATM")):
+            id = int(line[4:11].strip())
+            new_id = id + prot_len  # offset by protein length
+            new_line = line[:6] + f"{new_id:>6}" + line[10:]
+            adjusted_lines.append(new_line)
+        else:
+            adjusted_lines.append(line)
 
-# # Strongly recommended for RNA-protein modeling
-# -new_fold_tree_initializer true
-# -bps_moves false
+    with open(output_path, "w") as f:
+        f.writelines(adjusted_lines)
 
-# # Docking on (RNA moves vs rigid protein)
-# -rna_protein_docking true
-# -docking_move_size 1.0
-# -ramp_rnp_vdw true
-# -FA_low_res_rnp_scoring true
-# -convert_protein_CEN false
+    print(f"✅ Adjusted RNA PDB saved to: {output_path}")
 
-# # Low-res only or enable RNA minimization later; start simple:
-# -minimize_rna false
+output_pdb_path = "$OUTDIR/inputs/RNA_helix.pdb"
+adjust_rna_pdb_indices(output_pdb_path, prot_len=$PROT_LEN, output_path=output_pdb_path)
+PY
 
-# # Output
-# -nstruct $NSTRUCT
-# -out:file:silent $OUTDIR/work/fold_and_dock.out
+# --- Flags for fold-and-dock (protein rigid, RNA moves) ----------------------
+cat > "$OUTDIR/inputs/flags_fold_and_dock" <<FLAGS
+# Required inputs
+-fasta $OUTDIR/inputs/fasta.txt
+-secstruct_file $OUTDIR/inputs/secstruct.txt
+# -s $PROT_PDB $OUTDIR/inputs/RNA_helix_3nt.pdb
+-s $PROT_PDB $RNA_HELIXPDB
 
-# # Reproducible RNG
-# -run:constant_seed
-# -run:jran $SEED
-# FLAGS
+# Strongly recommended for RNA-protein modeling
+-new_fold_tree_initializer true
+-bps_moves false
 
-# # --- Flags for NO-DOCK variant (fix initial orientation; protein rigid) ------
-# cat > "$OUTDIR/inputs/flags_no_dock" <<FLAGS
-# -fasta $OUTDIR/inputs/fasta.txt
-# -secstruct_file $OUTDIR/inputs/secstruct.txt
-# # Put protein and RNA helix in one file to *fix* their relative orientation
-# # -s $PROT_PDB $OUTDIR/inputs/RNA_helix_3nt.pdb
-# -s $PROT_PDB $RNA_HELIXPDB
-# -new_fold_tree_initializer true
-# -rna_protein_docking false
-# -minimize_rna false
-# -nstruct $NSTRUCT
-# -out:file:silent $OUTDIR/work/fix_rigid.out
-# -run:constant_seed
-# -run:jran $SEED
-# FLAGS
+# Docking on (RNA moves vs rigid protein)
+-rna_protein_docking true
+-docking_move_size 1.0
+-ramp_rnp_vdw true
+-FA_low_res_rnp_scoring true
+-convert_protein_CEN false
 
-# # --- Run ---------------------------------------------------------------------
-# EXE="$ROSETTA/bin/rna_denovo.default.$(uname -s | tr '[:upper:]' '[:lower:]')$(uname -m | sed 's/x86_64/linuxgccrelease/;s/aarch64/linuxclangrelease/')"
-# if [[ ! -x "$EXE" ]]; then
-#   # Fallback: try a common build name
-#   EXE="$ROSETTA/bin/rna_denovo.default.linuxgccrelease"
-# fi
-# [[ -x "$EXE" ]] || { echo "Cannot find Rosetta rna_denovo executable in $ROSETTA/bin"; exit 1; }
+# Low-res only or enable RNA minimization later; start simple:
+-minimize_rna false
 
-# echo "[*] Running fold-and-dock (protein rigid, RNA docks)..."
-# "$EXE" @"$OUTDIR/inputs/flags_fold_and_dock" -database "$ROSETTAMAIN/database" > "$OUTDIR/logs/fold_and_dock.log" 2>&1
+# Output
+-nstruct $NSTRUCT
+-out:file:silent $OUTDIR/work/fold_and_dock.out
 
-# echo "[*] Done. Silent file: $OUTDIR/work/fold_and_dock.out"
-# echo "Tip: extract top models with Rosetta's extract_lowscore_decoys.py (in Rosetta tools)."
+# Reproducible RNG
+-run:constant_seed
+-run:jran $SEED
+FLAGS
+
+# --- Flags for NO-DOCK variant (fix initial orientation; protein rigid) ------
+cat > "$OUTDIR/inputs/flags_no_dock" <<FLAGS
+-fasta $OUTDIR/inputs/fasta.txt
+-secstruct_file $OUTDIR/inputs/secstruct.txt
+# Put protein and RNA helix in one file to *fix* their relative orientation
+# -s $PROT_PDB $OUTDIR/inputs/RNA_helix_3nt.pdb
+-s $PROT_PDB $RNA_HELIXPDB
+-new_fold_tree_initializer true
+-rna_protein_docking false
+-minimize_rna false
+-nstruct $NSTRUCT
+-out:file:silent $OUTDIR/work/fix_rigid.out
+-run:constant_seed
+-run:jran $SEED
+FLAGS
+
+# --- Run ---------------------------------------------------------------------
+EXE="$ROSETTA/bin/rna_denovo.default.$(uname -s | tr '[:upper:]' '[:lower:]')$(uname -m | sed 's/x86_64/linuxgccrelease/;s/aarch64/linuxclangrelease/')"
+if [[ ! -x "$EXE" ]]; then
+  # Fallback: try a common build name
+  EXE="$ROSETTA/bin/rna_denovo.default.linuxgccrelease"
+fi
+[[ -x "$EXE" ]] || { echo "Cannot find Rosetta rna_denovo executable in $ROSETTA/bin"; exit 1; }
+
+echo "[*] Running fold-and-dock (protein rigid, RNA docks)..."
+"$EXE" @"$OUTDIR/inputs/flags_fold_and_dock" -database "$ROSETTAMAIN/database" > "$OUTDIR/logs/fold_and_dock.log" 2>&1
+
+echo "[*] Done. Silent file: $OUTDIR/work/fold_and_dock.out"
+echo "Tip: extract top models with Rosetta's extract_lowscore_decoys.py (in Rosetta tools)."
