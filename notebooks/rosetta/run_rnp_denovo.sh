@@ -19,6 +19,15 @@ set -euo pipefail
 #   --nstruct 500                \
 #   --seed 1               \
 #   --outdir rnp_run
+# ./run_rnp_denovo.sh \
+#   --rosetta ~/rosetta/rosetta.binary.ubuntu.release-408/main/source   \
+#   --protein_pdb ~/rosetta/rosetta.binary.ubuntu.release-408/main/demos/public/rnp_structure_prediction/unbound_protein.pdb \
+#   --rna_seq ggcacagaagauauggcuucgugcc \
+#   --rna_secstruct "(((((.((((......)))))))))" \
+#   --rna_helixpdb ~/rosetta/rosetta.binary.ubuntu.release-408/main/demos/public/rnp_structure_prediction/RNA_helix.pdb \
+#   --nstruct 500                \
+#   --seed 1               \
+#   --outdir rnp_run
 #
 # Notes:
 #  - --rosetta should point at the Rosetta *source or install* root containing bin/ and database/
@@ -30,9 +39,11 @@ set -euo pipefail
 ROSETTA=""
 PROT_CIF=""
 PROT_PDB=""
+PROT_PDB_OG=""
 RNA_SEQ=""
 RNA_SS=""
 RNA_HELIXPDB=""
+RNA_HELIXPDB_OG=""
 NSTRUCT=100
 SEED=1111111
 OUTDIR="rnp_run"
@@ -42,9 +53,11 @@ while [[ $# -gt 0 ]]; do
     --rosetta) ROSETTA="$2"; shift 2;;
     --protein_cif) PROT_CIF="$2"; shift 2;;
     --protein_pdb) PROT_PDB="$2"; shift 2;;
+    --protein_pdb) PROT_PDB_OG="$2"; shift 2;;
     --rna_seq) RNA_SEQ="$2"; shift 2;;
     --rna_secstruct) RNA_SS="$2"; shift 2;;
     --rna_helixpdb) RNA_HELIXPDB="$2"; shift 2;;
+    --rna_helixpdb) RNA_HELIXPDB_OG="$2"; shift 2;;
     --nstruct) NSTRUCT="$2"; shift 2;;
     --seed) SEED="$2"; shift 2;;
     --outdir) OUTDIR="$2"; shift 2;;
@@ -137,6 +150,14 @@ seq=''
 for ch in st[0]:
     if ch.get_polymer().check_polymer_type() == gemmi.PolymerType.PeptideL:
         seq_list = ch.get_polymer().extract_sequence()
+        print(seq_list)
+        seq_list = [aa_lookup.get(res, 'X') for res in seq_list]  # map to one-letter, unknowns to X
+        seq += ''.join(seq_list)  # one-letter AA per chain, concatenated
+    else:
+        # for attr in dir(ch.whole()):
+        #     if not attr.startswith("_"):
+        #         print(f"{attr}: {getattr(ch.whole(), attr)}")
+        seq_list = [r.name for r in ch.whole()]
         seq_list = [aa_lookup.get(res, 'X') for res in seq_list]  # map to one-letter, unknowns to X
         seq += ''.join(seq_list)  # one-letter AA per chain, concatenated
 # sanity
@@ -176,7 +197,9 @@ python3 - <<PY
 prot_len = int("$PROT_LEN")
 rna_ss = "$RNA_SS".strip()
 sec = "."*prot_len + rna_ss
-open("$OUTDIR/inputs/secstruct.txt","w").write(sec+"\n")
+with open("$OUTDIR/inputs/fasta.txt") as f:
+  seq = f.readlines()[1].strip()
+open("$OUTDIR/inputs/secstruct.txt","w").write(sec+"\n"+seq)
 print(f"Total length: {len(sec)} (protein {prot_len} + RNA {len(rna_ss)})")
 PY
 
@@ -291,6 +314,26 @@ cat > "$OUTDIR/inputs/flags_no_dock" <<FLAGS
 -run:jran $SEED
 FLAGS
 
+# --- Flags for example -----
+cat > "$OUTDIR/inputs/flags_example" <<FLAGS
+-fasta $OUTDIR/inputs/fasta.txt
+-secstruct_file $OUTDIR/inputs/secstruct.txt
+-s $PROT_PDB_OG $RNA_HELIXPDB_OG
+-new_fold_tree_initializer true
+-minimize_rna false
+-nstruct 5
+# -out:file:silent 2qux_fold_and_dock.out
+# -rna:denovo:lores_scorefxn rna/denovo/rna_lores_with_rnp_aug.wts
+-cycles 1000
+-rna_protein_docking true
+-convert_protein_CEN false
+-FA_low_res_rnp_scoring true
+-ramp_rnp_vdw true
+-docking_move_size 1.0
+-no_filters
+-bps_moves false
+FLAGS
+
 # --- Run ---------------------------------------------------------------------
 EXE="$ROSETTA/bin/rna_denovo.default.$(uname -s | tr '[:upper:]' '[:lower:]')$(uname -m | sed 's/x86_64/linuxgccrelease/;s/aarch64/linuxclangrelease/')"
 if [[ ! -x "$EXE" ]]; then
@@ -300,7 +343,7 @@ fi
 [[ -x "$EXE" ]] || { echo "Cannot find Rosetta rna_denovo executable in $ROSETTA/bin"; exit 1; }
 
 echo "[*] Running fold-and-dock (protein rigid, RNA docks)..."
-"$EXE" @"$OUTDIR/inputs/flags_fold_and_dock" -database "$ROSETTAMAIN/database" > "$OUTDIR/logs/fold_and_dock.log" 2>&1
+"$EXE" @"$OUTDIR/inputs/flags_example" -database "$ROSETTAMAIN/database" > "$OUTDIR/logs/fold_and_dock.log" 2>&1
 
 echo "[*] Done. Silent file: $OUTDIR/work/fold_and_dock.out"
 echo "Tip: extract top models with Rosetta's extract_lowscore_decoys.py (in Rosetta tools)."
