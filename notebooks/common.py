@@ -108,7 +108,12 @@ def load_df_Reis(excel_file, sheet_name_proteins: str):
     df = calc_ARNs(df, 'SEQUENCE', "seq")
 
     df["log(yError)"] = np.log10(df["yError"])  # avoid log(0)
-
+    
+    # for k in ['Promoter', 'RBS']:
+    #     if k.upper() in df.columns:
+    #         df[f'{k} ID'] = df[k.upper()].apply(lambda x: dict(
+    #             zip(df[k.upper()].unique(), np.arange(df[k.upper()].nunique())))[x])
+        
     print("\nShape of dataframe:", df.shape)
     
     return df
