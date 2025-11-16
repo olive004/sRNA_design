@@ -7,6 +7,7 @@
 *wandb
 # data/sRNA/merged_inter.csv
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
+data/sRNA/Agnodice
 notebooks/blamm
 notebooks/boltz/results
 notebooks/boltz/rnp_run
