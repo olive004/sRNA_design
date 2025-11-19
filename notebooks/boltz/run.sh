@@ -1,0 +1,1 @@
+boltz predict jobs/bzjob_6_gfpmut3.yaml --use_msa_server

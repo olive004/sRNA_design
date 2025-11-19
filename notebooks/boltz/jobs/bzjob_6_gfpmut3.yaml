@@ -1,0 +1,45 @@
+version: 1
+
+sequences:
+  - rna:
+      id: G
+      sequence: "AUGAGCAAAGGCGAAGAACUGUUUACCGGCGUGGUGCCGAUUCUGGUGGAACUGGAUGGCGAUGUGAACGGCCAUAAAUUUAGCGUGAGCGGCGAAGGCGAAGGCGAUGCGACCUAUGGCAAACUGACCCUGAAAUUUAUUUGCACCACCGGCAAACUGCCGGUGCCGUGGCCGACCCUGGUGACCACCUUUAGCUAUGGCGUGCAGUGCUUUAGCCGCUAUCCGGAUCAUAUGAAACAGCAUGAUUUUUUUAAAAGCGCGAUGCCGGAAGGCUAUGUGCAGGAACGCACCAUUUUUUUUAAAGAUGAUGGCAACUAUAAAACCCGCGCGGAAGUGAAAUUUGAAGGCGAUACCCUGGUGAACCGCAUUGAACUGAAAGGCAUUGAUUUUAAAGAAGAUGGCAACAUUCUGGGCCAUAAACUGGAAUAUAACUAUAACAGCCAUAACGUGUAUAUUAUGGCGGAUAAACAGAAAAACGGCAUUAAAGUGAACUUUAAAAUUCGCCAUAACAUUGAAGAUGGCAGCGUGCAGCUGGCGGAUCAUUAUCAGCAGAACACCCCGAUUGGCGAUGGCCCGGUGCUGCUGCCGGAUAACCAUUAUCUGAGCACCCAGAGCGCGCUGAGCAAAGAUCCGAACGAAAAACGCGAUCAUAUGGUGCUGCUGGAAUUUGUGACCGCGGCGGGCAUUACCCAUGGCAUGGAUGAACUGUAUAAA"
+      # If your Boltz-2 build supports it, this helps seed the fold:
+      secondary_structure: ".........((((((.....((((((.....((((((((.(((((..........(((((..........))))).......((((.((((((.((((((..((((.(((........)))...)).))...........((((((.(((((((...)))))))((((((((.((...(((...)))...)).)))))))))))))))))))).))))))....(((((((.((...))..)))))))........(((((..(((....)))..)))))....)))).(((((((((((((((.(((((.(..((.((((...(((......)))...)))).))(((.(((....)))...)))............).))))).)))))))))))))))....(((((((........)))))))............(((((((........))))))).......)))))...))))))))..)))))).......))))))....((((.(..((((....((((.((((.(((.((((..(((((((..((((......(((....)))((((((.((((((((((((...))))))).))......)))))))))......((((((.........)).))))....))))))))))).....)))))))))))..))))...))))....).))))..........."
+
+sampling:
+  seeds: 8
+  movable_chains: [G]
+  moves:
+    - chain_id: G
+      rigid_body: { enabled: true, max_translation: 10.0, max_rotation_deg: 180 }
+      torsions:   { enabled: true }
+
+# Enforce the dot-bracket base pairs (5–8, 6–7). Keep weights modest.
+# restraints:
+#   base_pairs:
+#     - chain: G
+#       pairs:
+#         - { i: 5, j: 8, type: "WC", weight: 1.0 }  # '(' ... ')' in positions 5–8
+#         - { i: 6, j: 7, type: "WC", weight: 1.0 }  # '(' ... ')' in positions 6–7
+
+# (Optional) Keep overall RNA compact; remove if you want fully free exploration.
+  # radius_of_gyration:
+  #   - chain: G
+  #     target: 10.0
+  #     weight: 0.1
+
+scoring:
+  report: [plddt, pae, pde, clashes]
+  clash_threshold: 0.6
+  rank_by: ["pde:asc", "pae:asc", "clashes:asc"]
+
+outputs:
+  n_models: 20
+  save:
+    formats: [cif, pdb]
+    pae: true
+    pde: true
+    plddt: true
+  relax:
+    enabled: false

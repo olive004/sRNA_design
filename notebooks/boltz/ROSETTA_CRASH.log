@@ -1,0 +1,248 @@
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2025.37+release.df75a9c48e
+[COMMIT_DATE]: 2025-09-10T02:14:08.564791
+[APPLICATION]: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: default
+[OS]: GNU/Linux
+[COMPILER]: GCC version "9.4.0"
+[STDLIB]: libstdc++ version 20210601
+[START_OPTIONS]
+ -in:path:database=/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/ -in:file:s=rnp_run/inputs/protein.pdb rnp_run/inputs/RNA_helix_3nt.pdb -in:file:fasta=rnp_run/inputs/fasta.txt -out:nstruct=500 -out:file:silent=rnp_run/work/fold_and_dock.out -run:constant_seed -run:jran=1 -score:rna:FA_low_res_rnp_scoring -rna:denovo:minimize_rna=false -rna:denovo:secstruct_file=rnp_run/inputs/secstruct.txt -rna:denovo:ramp_rnp_vdw -rna:denovo:convert_protein_CEN=false -rna:denovo:rna_protein_docking -rna:denovo:docking_move_size=1 -rna:denovo:new_fold_tree_initializer
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(backtrace_string[abi:cxx11](int)+0x5a) [0x7f1cb0d6a71a]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::excn::Exception::Exception(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x103) [0x7f1cb0da3963]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::UtilityExitException::UtilityExitException(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x113) [0x7f1cb0d6f793]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::exit(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)+0x3b) [0x7f1cb0d6f3ab]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::init_restypes_from_database()+0x9be) [0x7f1cb193d5ae]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::GlobalResidueTypeSet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x206) [0x7f1cb194eb26]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::create_residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x1f5) [0x7f1cb19160a5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(std::_Function_handler<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (), std::_Bind<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (core::chemical::ChemicalManager::*(core::chemical::ChemicalManager*, std::reference_wrapper<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const>))(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const> >::_M_invoke(std::_Any_data const&)+0x43) [0x7f1cb19186f3]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x1d4) [0x7f1cb1914fe4]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xfafe) [0x55cf53ef2afe]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0x11aa5) [0x55cf53ef4aa5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe278) [0x55cf53ef1278]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7f1cb06f4083]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe3de) [0x55cf53ef13de]
+
+[END_BACKTRACE]
+
+[FILE]: src/core/chemical/GlobalResidueTypeSet.cc
+[LINE]: 147
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: Unable to open file: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/chemical/residue_type_sets/fa_standard/residue_types.txt
+
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2025.37+release.df75a9c48e
+[COMMIT_DATE]: 2025-09-10T02:14:08.564791
+[APPLICATION]: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: default
+[OS]: GNU/Linux
+[COMPILER]: GCC version "9.4.0"
+[STDLIB]: libstdc++ version 20210601
+[START_OPTIONS]
+ -in:path:database=/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/ -in:file:s=rnp_run/inputs/protein.pdb rnp_run/inputs/RNA_helix_3nt.pdb -in:file:fasta=rnp_run/inputs/fasta.txt -out:nstruct=500 -out:file:silent=rnp_run/work/fold_and_dock.out -run:constant_seed -run:jran=1 -score:rna:FA_low_res_rnp_scoring -rna:denovo:minimize_rna=false -rna:denovo:secstruct_file=rnp_run/inputs/secstruct.txt -rna:denovo:ramp_rnp_vdw -rna:denovo:convert_protein_CEN=false -rna:denovo:rna_protein_docking -rna:denovo:docking_move_size=1 -rna:denovo:new_fold_tree_initializer
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(backtrace_string[abi:cxx11](int)+0x5a) [0x7f9ed928d71a]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::excn::Exception::Exception(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x103) [0x7f9ed92c6963]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::UtilityExitException::UtilityExitException(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x113) [0x7f9ed9292793]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::exit(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)+0x3b) [0x7f9ed92923ab]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::init_restypes_from_database()+0x9be) [0x7f9ed9e605ae]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::GlobalResidueTypeSet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x206) [0x7f9ed9e71b26]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::create_residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x1f5) [0x7f9ed9e390a5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(std::_Function_handler<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (), std::_Bind<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (core::chemical::ChemicalManager::*(core::chemical::ChemicalManager*, std::reference_wrapper<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const>))(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const> >::_M_invoke(std::_Any_data const&)+0x43) [0x7f9ed9e3b6f3]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x1d4) [0x7f9ed9e37fe4]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xfafe) [0x55b885dc4afe]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0x11aa5) [0x55b885dc6aa5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe278) [0x55b885dc3278]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7f9ed8c17083]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe3de) [0x55b885dc33de]
+
+[END_BACKTRACE]
+
+[FILE]: src/core/chemical/GlobalResidueTypeSet.cc
+[LINE]: 147
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: Unable to open file: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/chemical/residue_type_sets/fa_standard/residue_types.txt
+
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2025.37+release.df75a9c48e
+[COMMIT_DATE]: 2025-09-10T02:14:08.564791
+[APPLICATION]: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: default
+[OS]: GNU/Linux
+[COMPILER]: GCC version "9.4.0"
+[STDLIB]: libstdc++ version 20210601
+[START_OPTIONS]
+ -in:path:database=/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/ -in:file:s=rnp_run/inputs/protein.pdb rnp_run/inputs/RNA_helix_3nt.pdb -in:file:fasta=rnp_run/inputs/fasta.txt -out:nstruct=500 -out:file:silent=rnp_run/work/fold_and_dock.out -run:constant_seed -run:jran=1 -score:rna:FA_low_res_rnp_scoring -rna:denovo:minimize_rna=false -rna:denovo:secstruct_file=rnp_run/inputs/secstruct.txt -rna:denovo:ramp_rnp_vdw -rna:denovo:convert_protein_CEN=false -rna:denovo:rna_protein_docking -rna:denovo:docking_move_size=1 -rna:denovo:new_fold_tree_initializer
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(backtrace_string[abi:cxx11](int)+0x5a) [0x7fb16bd5d71a]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::excn::Exception::Exception(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x103) [0x7fb16bd96963]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::UtilityExitException::UtilityExitException(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x113) [0x7fb16bd62793]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::exit(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)+0x3b) [0x7fb16bd623ab]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::init_restypes_from_database()+0x9be) [0x7fb16c9305ae]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::GlobalResidueTypeSet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x206) [0x7fb16c941b26]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::create_residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x1f5) [0x7fb16c9090a5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(std::_Function_handler<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (), std::_Bind<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (core::chemical::ChemicalManager::*(core::chemical::ChemicalManager*, std::reference_wrapper<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const>))(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const> >::_M_invoke(std::_Any_data const&)+0x43) [0x7fb16c90b6f3]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x1d4) [0x7fb16c907fe4]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xfafe) [0x55a8f6338afe]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0x11aa5) [0x55a8f633aaa5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe278) [0x55a8f6337278]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7fb16b6e7083]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe3de) [0x55a8f63373de]
+
+[END_BACKTRACE]
+
+[FILE]: src/core/chemical/GlobalResidueTypeSet.cc
+[LINE]: 147
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: Unable to open file: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/chemical/residue_type_sets/fa_standard/residue_types.txt
+
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2025.37+release.df75a9c48e
+[COMMIT_DATE]: 2025-09-10T02:14:08.564791
+[APPLICATION]: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: default
+[OS]: GNU/Linux
+[COMPILER]: GCC version "9.4.0"
+[STDLIB]: libstdc++ version 20210601
+[START_OPTIONS]
+ -in:path:database=/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/ -in:file:s=rnp_run/inputs/protein.pdb rnp_run/inputs/RNA_helix_3nt.pdb -in:file:fasta=rnp_run/inputs/fasta.txt -out:nstruct=500 -out:file:silent=rnp_run/work/fold_and_dock.out -run:constant_seed -run:jran=1 -score:rna:FA_low_res_rnp_scoring -rna:denovo:minimize_rna=false -rna:denovo:secstruct_file=rnp_run/inputs/secstruct.txt -rna:denovo:ramp_rnp_vdw -rna:denovo:convert_protein_CEN=false -rna:denovo:rna_protein_docking -rna:denovo:docking_move_size=1 -rna:denovo:new_fold_tree_initializer
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(backtrace_string[abi:cxx11](int)+0x5a) [0x7f759d63271a]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::excn::Exception::Exception(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x103) [0x7f759d66b963]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::UtilityExitException::UtilityExitException(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x113) [0x7f759d637793]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::exit(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)+0x3b) [0x7f759d6373ab]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::init_restypes_from_database()+0x9be) [0x7f759e2055ae]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::GlobalResidueTypeSet::GlobalResidueTypeSet(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x206) [0x7f759e216b26]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::create_residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const+0x1f5) [0x7f759e1de0a5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(std::_Function_handler<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (), std::_Bind<std::shared_ptr<core::chemical::GlobalResidueTypeSet> (core::chemical::ChemicalManager::*(core::chemical::ChemicalManager*, std::reference_wrapper<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const>))(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const> >::_M_invoke(std::_Any_data const&)+0x43) [0x7f759e1e06f3]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.2.so(core::chemical::ChemicalManager::residue_type_set(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x1d4) [0x7f759e1dcfe4]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xfafe) [0x55c95b896afe]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0x11aa5) [0x55c95b898aa5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe278) [0x55c95b895278]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7f759cfbc083]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe3de) [0x55c95b8953de]
+
+[END_BACKTRACE]
+
+[FILE]: src/core/chemical/GlobalResidueTypeSet.cc
+[LINE]: 147
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: Unable to open file: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/database/chemical/residue_type_sets/fa_standard/residue_types.txt
+
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
+##############################################################################################################
+#
+# Rosetta crash log. Please submit the contents of this file to http://crash.rosettacommons.org/
+# or use the script Rosetta/main/source/scripts/python/public/report_crashes.py
+#
+
+[START_CRASH_REPORT]
+[ROSETTA_VERSION]: 2025.37+release.df75a9c48e
+[COMMIT_DATE]: 2025-09-10T02:14:08.564791
+[APPLICATION]: /home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease
+[MODE]: Release
+[EXTRAS]: default
+[OS]: GNU/Linux
+[COMPILER]: GCC version "9.4.0"
+[STDLIB]: libstdc++ version 20210601
+[START_OPTIONS]
+ -in:path:database=/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/database/ -in:file:s=rnp_run/inputs/protein.pdb rnp_run/inputs/RNA_helix_3nt.pdb -in:file:fasta=rnp_run/inputs/fasta.txt -out:nstruct=500 -out:file:silent=rnp_run/work/fold_and_dock.out -run:constant_seed -run:jran=1 -score:rna:FA_low_res_rnp_scoring -rna:denovo:minimize_rna=false -rna:denovo:secstruct_file=rnp_run/inputs/secstruct.txt -rna:denovo:ramp_rnp_vdw -rna:denovo:convert_protein_CEN=false -rna:denovo:rna_protein_docking -rna:denovo:docking_move_size=1 -rna:denovo:new_fold_tree_initializer
+
+[END_OPTIONS]
+
+[START_BACKTRACE]: RAW_LIBC
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(backtrace_string[abi:cxx11](int)+0x5a) [0x7fb77a9be71a]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::excn::Exception::Exception(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x103) [0x7fb77a9f7963]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::UtilityExitException::UtilityExitException(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)+0x113) [0x7fb77a9c3793]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libutility.so(utility::exit(char const*, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int)+0x3b) [0x7fb77a9c33ab]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.3.so(core::pose::full_model_info::nonconst_full_model_info(core::pose::Pose&)+0x43d) [0x7fb775ca688d]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.3.so(core::pose::full_model_info::get_res_list_from_full_model_info(core::pose::Pose&)+0xd) [0x7fb775cc663d]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libcore.3.so(core::pose::full_model_info::update_pdb_info_from_full_model_info(core::pose::Pose&)+0x30) [0x7fb775cd2c90]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/build/src/release/linux/5.15/64/x86/gcc/9/default/libprotocols_d.6.so(protocols::rna::denovo::movers::RNA_DeNovoProtocolMover::de_novo_setup_from_options(utility::options::OptionCollection const&)+0x3009) [0x7fb77d16a879]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xfb63) [0x56052b8d7b63]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0x11aa5) [0x56052b8d9aa5]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe278) [0x56052b8d6278]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf3) [0x7fb77a348083]
+/home/hslab/rosetta/rosetta.binary.ubuntu.release-408/main/source/bin/rna_denovo.default.linuxgccrelease(+0xe3de) [0x56052b8d63de]
+
+[END_BACKTRACE]
+
+[FILE]: src/core/pose/full_model_info/FullModelInfo.cc
+[LINE]: 658
+[START_MESSAGE]
+[ ERROR ] UtilityExitException
+ERROR: Assertion `check_full_model_info_OK( pose )` failed.
+
+
+
+[END_MESSAGE]
+[END_CRASH_REPORT]
+
