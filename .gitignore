@@ -7,8 +7,13 @@
 *wandb
 # data/sRNA/merged_inter.csv
 data/sRNA/merged_EcoCyc_RNAInter_sRNATarBase.csv
+data/sRNA/Agnodice
 notebooks/blamm
+notebooks/boltz/results
+notebooks/boltz/rnp_run
 notebooks/data/*
+notebooks/rosetta/rnp_run
+notebooks/rosetta/ROSETTA_CRASH.log
 notebooks/ViennaRNA*
 notebooks/ViennaRNA
 notebooks/weight_saves
@@ -24,5 +29,5 @@ notebooks/RNAplfold_scripts
 src/nucleotide_transformer
 notebooks/nupack*
 notebooks/blamm
-SalisLabCode/*
 SalisLabCode
+SalisLabCode/*
