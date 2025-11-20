@@ -23,6 +23,28 @@ def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate', an
     except FileNotFoundError:
         print('No Java found, could not visualise')
         pass
+    
+    
+def approx_to_nearest_mapval(values: np.ndarray, *, map: np.ndarray) -> np.ndarray:
+    """
+    For each value in `values`, find the nearest value in `map` and return an array of these.
+
+    Args
+    ----
+    values: Iterable of float values to map.
+    map:    Iterable of float "map" values to approximate to.
+
+    Returns
+    -------
+    np.ndarray of same shape as `values`, with each entry replaced by nearest entry from `map`.
+    """
+    values = np.asarray(values, dtype=float)
+    map = np.asarray(map, dtype=float)
+    mapped_vals = np.empty_like(values)
+    for i, v in enumerate(values):
+        idx = np.abs(map - v).argmin()
+        mapped_vals[i] = map[idx]
+    return mapped_vals
 
 
 def draw_rna_nucolor_varna(
@@ -35,7 +57,10 @@ def draw_rna_nucolor_varna(
     algorithm: str = "naview",
     resolution: Union[int, float] = 10,
     annotate: bool = False,
-    palette: str = 'viridis'
+    palette: str = 'viridis',
+    vMin: float = 0.0,
+    vMax: float = 1.0,
+    autonorm: bool = True
 ) -> Structure:
     """
     Visualise RNA secondary structure with VARNA (via varnaapi) and color nucleotides by nuc_color using 'viridis'.
@@ -63,29 +88,18 @@ def draw_rna_nucolor_varna(
         raise ValueError(
             f"plDDT length must equal sequence length (expected {n}, got {nuc_color.shape[0]})")
 
-    # Accept both 0..100 and 0..1, normalise to 0..1 for colormap construction, but keep raw range for VARNA scaling
-    raw_min, raw_max = float(nuc_color.min()), float(nuc_color.max())
-    # If values look like 0..100, scale to 0..1 for colormap keys but retain vMin/vMax as raw (so legend is 0..100)
-    looks_0_100 = False #raw_max > 1.5
-    # norm_vals = (plddt / 100.0) if looks_0_100 else plddt.copy()
-
-    norm_vals = np.interp(nuc_color, (nuc_color.min(), nuc_color.max()), (0.0, 1.0))
+    if autonorm:
+        norm_vals = np.interp(nuc_color, (nuc_color.min(), nuc_color.max()), (0.0, 1.0))
+    else:
+        norm_vals = nuc_color.copy()
 
     # --- build a custom viridis style mapping for VARNA
     # VARNA API allows a custom color map via a dict {value: color}; we provide a dense 256-step mapping.
     # Keys must be on the same numeric scale as vMin/vMax passed to add_colormap.
-    if looks_0_100:
-        # keys in 0..100
-        keys = np.linspace(0.0, 100.0, 256)
-        samples = keys / 100.0
-        vMin, vMax = 0.0, 100.0
-        value_list_for_varna = nuc_color.tolist()
-    else:
-        # keys in 0..1
-        keys = np.linspace(0.0, 1.0, 256)
-        samples = keys
-        vMin, vMax = 0.0, 1.0
-        value_list_for_varna = norm_vals.tolist()
+        
+    keys = np.linspace(vMin, vMax, 256)
+    samples = keys / vMax
+    value_list_for_varna = approx_to_nearest_mapval(norm_vals, map=keys).tolist()
 
     vir = cm.get_cmap(palette)
     hex_colors = [mcolors.to_hex(vir(x), keep_alpha=False) for x in samples]
