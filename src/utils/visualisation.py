@@ -7,7 +7,9 @@ import matplotlib.colors as mcolors
 from varnaapi import Structure
 
 
-def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate', annotate: bool = False, highlight_kwrgs: dict = None):
+def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate', 
+                       annotate: bool = False, highlight_kwrgs: dict = None,
+                       save_path=None):
     try:
         v = Structure(structure=rna_structure, sequence=seq)
         v._params['resolution'] = resolution
@@ -19,7 +21,8 @@ def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate', an
         if highlight_kwrgs:
             v.add_highlight_region(**highlight_kwrgs)
         v.show()
-        # v.savefig("example.png", show=True)
+        if save_path:
+            v.savefig(save_path) #, show=True)
     except FileNotFoundError:
         print('No Java found, could not visualise')
         pass
