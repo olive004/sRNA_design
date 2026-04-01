@@ -1,6 +1,6 @@
 
 
-from typing import Sequence, Optional, Union
+from typing import List, Optional, Union
 import numpy as np
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
@@ -9,6 +9,7 @@ from varnaapi import Structure
 
 def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate', 
                        annotate: bool = False, highlight_kwrgs: dict = None,
+                       highlight_multiple_kwrgs: List[dict] = None,
                        save_path=None):
     try:
         v = Structure(structure=rna_structure, sequence=seq)
@@ -20,6 +21,9 @@ def show_rna_structure(rna_structure, seq, resolution=3, algorithm='radiate',
             v._params['autoTerminalLoops'] = True
         if highlight_kwrgs:
             v.add_highlight_region(**highlight_kwrgs)
+        if highlight_multiple_kwrgs is not None:
+            for kwrgs in highlight_multiple_kwrgs:
+                v.add_highlight_region(**kwrgs)
         v.show()
         if save_path:
             v.savefig(save_path) #, show=True)
