@@ -1,0 +1,39 @@
+biopython
+autopep8
+# -e git+https://github.com/Steel-Lab-Oxford/core-bioreaction-simulation.git@f903c39872de43e28b56653efda689bb082cb592#egg=bioreaction
+boto3
+boltz
+chex
+# git+https://github.com/deepmind/chex.git
+diffrax
+dm-haiku
+# dm-tree
+equinox
+graphviz
+imblearn
+ipykernel
+# jax
+# -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html 
+# jaxlib
+jupyter
+matplotlib
+notebook
+numpy
+nvidia-cudnn-cu12
+openpyxl
+optax
+pandas
+pyvis
+regex
+scikit-learn
+scipy
+seaborn
+# -e git+https://github.com/olive004/synbio_morpher.git@147c6a18a8c08b25d49042ec1adb9ec49ebadd75#egg=synbio_morpher
+# -i https://test.pypi.org/simple/ synbio-morpher
+torch
+tqdm
+typing_extensions
+umap-learn
+varnaapi
+viennarna
+wandb
